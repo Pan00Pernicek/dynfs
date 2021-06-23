@@ -1,0 +1,20 @@
+#!/bin/sh
+exec=$1
+shift
+for arg in "$@"
+do
+	n=0
+	for argv in $arg
+	do
+		n=$(( n + 1 ))
+		if [ $n = 1 ]
+		then
+			source=$argv
+		else
+			files="$files $argv"
+			ln $source $argv
+		fi
+	done
+done
+$exec
+rm -r $files
